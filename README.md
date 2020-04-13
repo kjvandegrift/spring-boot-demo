@@ -1,7 +1,7 @@
 # Kubernetes Pipeline Demo
 
 ## Software Involved in Demo
-### Software to be installed
+### Software to install
 ```
 docker 19.03.7
 kubectl 1.17

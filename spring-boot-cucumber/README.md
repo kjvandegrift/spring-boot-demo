@@ -1,16 +1,13 @@
 ## Build Cucumber Application
 ``` bash
-# Add plugins to build.gradle
-dependencies {  
-    testCompile(group: 'io.cucumber', name: 'cucumber-java', version: '4.3.0')  
-    testCompile(group: 'io.cucumber', name: 'cucumber-junit', version: '4.3.0')  
-    testCompile(group: 'io.cucumber', name: 'cucumber-spring', version: '4.3.0')  
-  }  
-}
-# Add feature files to test/resources
+# The Cucumber feature file is located in 
+# "test/resources/features/calculator.feature"
 
+# The test/CalculatorControllerTest.java file kicks off 
+# the test execution causing Cucumber to run the feature file
 # Run cucumber tests
 $ gradle test
+
+# Cucumber results displayed after "CalculatorControllerTest >" in gradle results.
 # Generating HTML cucumber reports requires Jenkins plugin
-$ gradle allureRepot allureServe
 ```
