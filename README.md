@@ -65,6 +65,18 @@ $ docker push localhost:5000/spring-boot-cucumber
 $ curl -s http://localhost:5000/v2/_catalog | jq
 ```
 ### Create docker file and docker image and push image to docker registry with jib
+Jib is a plugin for Gradle that builds a Docker image without needing to maintain a Dockerfile.  It allows you to build a java based docker image with
+Gradle with limited docker image configuration.
+See the build.gradle file for the jib configuration. 
+```
+jib {  
+  allowInsecureRegistries = true
+  to {
+    image = 'localhost:5000/spring-boot-allure'
+    tags = ['latest']
+  }
+}
+```
 ``` bash
 # Build the spring-boot-allure application
 $ gradle clean build jib
@@ -85,7 +97,11 @@ $ kubectl expose deployment spring-boot-cucumber --name=spring-boot-cucumber --t
 # Create service to expose spring-boot-cucumber deployment to be accessed external to kubernetes cluster
 $ kubectl apply -f service.yaml
 ```
-### Create spring-boot-demo Helm chart
+### Create spring-boot-cucumber Helm chart
+Note: The spring-boot-cucumber project already has the following steps 
+completed.  Remove the helm-chart folder before running the following 
+steps.  Similar steps where used to create the helm-chart folder for the 
+spring-boot-allure project.
 ``` bash
 # Create a Helm chart for the application
 $ helm create spring-boot-cucumber
@@ -149,12 +165,15 @@ EOF
 # install the Helm chart into your Kubernetes cluster from the root of your project
 $ helm install spring-boot-cucumber helm-chart
 ```
-###  Add Helm Charts to Local Helm Repository
+### Configure chartmuseum Helm chart repo
 ``` bash
 # Create Local Respository
 $ chartmuseum --debug --port=9090 --storage="local" --storage-local-rootdir="./chartstorage"
 # Add local repository to helm repos
 $ helm repo add chartmuseum http://localhost:9090
+```
+###  Add spring-boot-cucumber Helm Chart to Local Helm Repository
+``` bash
 # Create spring-boot-cucumber helm package
 $ cd spring-boot-cucumber/helm-chart
 $ helm package .
@@ -164,6 +183,9 @@ $ curl --data-binary "@spring-boot-cucumber-0.1.0.tgz" http://localhost:9090/api
 $ helm repo update
 # Install helm package into kubernetes 
 $ helm install spring-boot-cucumber chartmuseum/spring-boot-cucumber
+```
+###  Add spring-boot-allure Helm Chart to Local Helm Repository
+``` bash
 # Create spring-boot-allure helm package
 $ cd spring-boot-allure/helm-chart
 $ helm package . 
@@ -175,6 +197,9 @@ $ helm repo update
 $ helm install spring-boot-allure chartmuseum/spring-boot-allure
 ```
 ## Create Umbrella Chart
+An umbrella chart is a helm chart with sub-charts.  This umbrella chart would be 
+used install, uninstall multiple charts with a single command.  The sub-charts 
+are pulled from the Helm repository.
 ``` bash
 # Create helm chart with child charts
 $ helm create spring-boot-chart
