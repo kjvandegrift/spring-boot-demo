@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-cucumber
+  labels:
+    app: spring-boot-cucumber
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8082
+    targetPort: 55002
+    protocol: TCP
+  selector:
+    app: spring-boot-cucumber

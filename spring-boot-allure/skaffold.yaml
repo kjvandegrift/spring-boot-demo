@@ -1,0 +1,19 @@
+apiVersion: skaffold/v2beta1
+kind: Config
+metadata:
+  name: spring-boot-allure
+build:
+  artifacts:
+  - image: localhost:5000/spring-boot-allure
+    jib: {}
+  local:
+    push: true
+deploy:
+  helm:
+    releases:
+    - name: spring-boot-allure
+      chartPath: helm-chart
+      values:
+        image.repository: localhost:5000/spring-boot-allure
+      setValues:
+        image.tag: ""

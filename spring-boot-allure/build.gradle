@@ -1,0 +1,69 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.5.RELEASE")
+        classpath("io.qameta.allure:allure-gradle:2.8.1")
+        classpath("gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:2.1.0")
+    }
+}
+
+apply plugin: "io.qameta.allure"
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.google.cloud.tools.jib"
+
+allure {
+    autoconfigure = true
+    version = '2.10.0'
+
+    useJUnit5 {
+        version = '2.10.0'
+    }
+}
+
+jib {  
+  allowInsecureRegistries = true
+  to {
+    image = 'localhost:5000/spring-boot-allure'
+    tags = ['latest']
+  }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+bootJar {
+    baseName = 'spring-boot-allure'
+    version =  '0.1.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+test {
+
+    ignoreFailures = true
+
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

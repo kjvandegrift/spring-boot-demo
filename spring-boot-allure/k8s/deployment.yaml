@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-allure
+  labels:
+    app: spring-boot-allure # label to identify the deployment
+spec:
+  replicas: 1 # Number of pods to create that match the template
+  selector:
+    matchLabels:
+      app: spring-boot-allure # selector label defines which pods(match pod template label) this deployment applies.
+  template:
+    metadata:
+      labels:
+        app: spring-boot-allure # pod template label matched by the selector labels
+    spec:
+      containers:
+      - name: spring-boot-allure-container
+        image: localhost:5000/spring-boot-allure # include host and port if a local registry

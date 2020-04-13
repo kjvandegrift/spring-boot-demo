@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-allure
+  labels:
+    app: spring-boot-allure # label to identify the service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080 # port exposed internally in the cluster
+      targetPort: 55000 # port that containers are listening on same as deployments containerPort
+      protocol: TCP
+  selector:
+    app: spring-boot-allure # selector label defines which pods(match pod template label) this service applies.

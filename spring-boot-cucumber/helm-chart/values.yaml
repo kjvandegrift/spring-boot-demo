@@ -1,0 +1,12 @@
+replicaCount: 1
+
+image:
+  repository: localhost:5000/spring-boot-cucumber
+  tag: latest
+
+fullnameOverride: "spring-boot-cucumber"
+
+service:
+  type: LoadBalancer
+  port: 8082
+  targetPort: 55002

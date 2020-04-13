@@ -1,0 +1,12 @@
+replicaCount: 1
+
+image:
+  repository: localhost:5000/spring-boot-allure
+  tag: latest
+
+fullnameOverride: "spring-boot-allure"
+
+service:
+  type: LoadBalancer
+  port: 8080
+  targetPort: 55000

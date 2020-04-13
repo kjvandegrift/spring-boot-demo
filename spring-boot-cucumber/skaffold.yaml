@@ -1,0 +1,10 @@
+apiVersion: skaffold/v2beta1
+kind: Config
+metadata:
+  name: spring-boot-cucumber
+build:
+  artifacts:
+  - image: localhost:5000/spring-boot-cucumber
+    context: .
+  local:
+    push: true

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-cucumber
+  labels:
+    app: spring-boot-cucumber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-cucumber
+  template:
+    metadata:
+      labels:
+        app: spring-boot-cucumber
+    spec:
+      containers:
+      - name: spring-boot-cucumber
+        image: localhost:5000/spring-boot-cucumber

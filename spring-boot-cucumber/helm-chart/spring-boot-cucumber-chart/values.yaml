@@ -1,0 +1,17 @@
+# Default values for spring-boot-cucumber-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicas: 1
+
+image:
+  repository: localhost:5000/spring-boot-cucumber
+  pullPolicy: IfNotPresent
+  tag: latest
+
+fullnameOverride: "spring-boot-cucumber"
+
+service:
+  type: LoadBalancer
+  port: 8082
+  targetPort: 55002
